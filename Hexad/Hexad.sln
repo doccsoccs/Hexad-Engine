@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Engine", "Engine\Engine.vcxproj", "{C531A681-70DC-4907-99B9-FFE5335179B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexadEditor", "HexadEditor\HexadEditor.csproj", "{92373B40-E640-4E9C-BDD4-4C9D8E9C4A64}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C531A681-70DC-4907-99B9-FFE5335179B7}.Debug|x64.ActiveCfg = Debug|x64
+		{C531A681-70DC-4907-99B9-FFE5335179B7}.Debug|x64.Build.0 = Debug|x64
+		{C531A681-70DC-4907-99B9-FFE5335179B7}.Release|x64.ActiveCfg = Release|x64
+		{C531A681-70DC-4907-99B9-FFE5335179B7}.Release|x64.Build.0 = Release|x64
+		{92373B40-E640-4E9C-BDD4-4C9D8E9C4A64}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{92373B40-E640-4E9C-BDD4-4C9D8E9C4A64}.Debug|x64.Build.0 = Debug|Any CPU
+		{92373B40-E640-4E9C-BDD4-4C9D8E9C4A64}.Release|x64.ActiveCfg = Release|Any CPU
+		{92373B40-E640-4E9C-BDD4-4C9D8E9C4A64}.Release|x64.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {19D4F5E4-1332-46DC-9D69-3CC2DF38BCA1}
+	EndGlobalSection
+EndGlobal
