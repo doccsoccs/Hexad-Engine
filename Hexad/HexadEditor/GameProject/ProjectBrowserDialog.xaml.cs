@@ -15,13 +15,35 @@ using System.Windows.Shapes;
 namespace HexadEditor.GameProject
 {
     /// <summary>
-    /// Interaction logic for ProjectBrowserDialg.xaml
+    /// Interaction logic for ProjectBrowserDialog.xaml
     /// </summary>
     public partial class ProjectBrowserDialog : Window
     {
         public ProjectBrowserDialog()
         {
             InitializeComponent();
+        }
+
+        private void OnToggleButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(sender == openProjectButton) // OPEN PROJECT BUTTON
+            {
+                if(createProjectButton.IsChecked == true) // was in create mode --> go to open mode
+                {
+                    createProjectButton.IsChecked = false;
+                    browserContent.Margin = new Thickness(0);
+                }
+                openProjectButton.IsChecked = true;
+            }
+            else if (sender == createProjectButton) // CREATE PROJECT BUTTON
+            {
+                if (openProjectButton.IsChecked == true) // was in open mode --> go to create mode
+                {
+                    openProjectButton.IsChecked = false;
+                    browserContent.Margin = new Thickness(-800,0,0,0);
+                }
+                createProjectButton.IsChecked = true;
+            }
         }
     }
 }

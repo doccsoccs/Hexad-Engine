@@ -37,7 +37,14 @@ namespace HexadEditor
         private void OpenProjectBrowserDialog()
         {
             var projectBrowser = new ProjectBrowserDialog();
-            projectBrowser.Show();
+            if(projectBrowser.ShowDialog() == false)
+            {
+                Application.Current.Shutdown();
+            }
+            else
+            {
+                // Open project
+            }
         }
     }
 }
