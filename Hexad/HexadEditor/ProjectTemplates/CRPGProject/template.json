@@ -1,0 +1,5 @@
+{
+    "ProjectType": "CRPG Project",
+    "ProjectFile": "project.hexad",
+    "Folders": [".Hexad", "Content", "GameCode"]
+}
