@@ -169,8 +169,14 @@ namespace HexadEditor.GameProject
                 File.Copy(template.IconFilePath, Path.GetFullPath(Path.Combine(dirInfo.FullName, "Icon.png")));
                 File.Copy(template.ScreenshotFilePath, Path.GetFullPath(Path.Combine(dirInfo.FullName, "Screenshot.png")));
 
-                var project = new Project(ProjectName, path);
-                Serializer.ToFile(project, path + ProjectName + Project.Extension);
+                //// USED TO CREATE .hexad PROJECT TEMPLATES
+                //var project = new project(projectname, path);
+                //serializer.tofile(project, path + $"{projectname}" + project.extension);
+
+                var projectXml = File.ReadAllText(template.ProjectFilePath);
+                projectXml = string.Format(projectXml, ProjectName, ProjectPath);
+                var projectPath = Path.GetFullPath(Path.Combine(path, $"{ProjectName}{Project.Extension}"));
+                File.WriteAllText(projectPath, projectXml);
 
                 return path;
             }
@@ -203,12 +209,20 @@ namespace HexadEditor.GameProject
         {
             try
             {
-                var templatesFiles = Directory.GetFiles(_templatePath, "template.json", SearchOption.AllDirectories);
+                var templatesFiles = Directory.GetFiles(_templatePath, "template.xml", SearchOption.AllDirectories);
                 Debug.Assert(templatesFiles.Any());
                 foreach (var file in templatesFiles)
                 {
-                    var template = Serializer.FromFile<ProjectTemplate>(file);
+                    //// USED TO GENERATE XML TEMPLATE FILES
+                    //var template = new ProjectTemplate()
+                    //{
+                    //    ProjectType = "Empty Project",
+                    //    ProjectFile = "project.hexad",
+                    //    Folders = new List<string>() { ".Hexad", "Content", "GameCode" }
+                    //};
+                    //Serializer.ToFile(template, file);
 
+                    var template = Serializer.FromFile<ProjectTemplate>(file);
                     template.IconFilePath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(file), "Icon.png"));
                     template.Icon = File.ReadAllBytes(template.IconFilePath);
                     template.ScreenshotFilePath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(file), "Screenshot.png"));

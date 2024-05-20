@@ -17,7 +17,7 @@ namespace HexadEditor.Utilities
             try
             {
                 var fs = new FileStream(path, FileMode.Create);
-                var serializer = new DataContractJsonSerializer(typeof(T));
+                var serializer = new DataContractSerializer(typeof(T));
                 serializer.WriteObject(fs, instance);
             }
             catch (Exception ex)
@@ -32,7 +32,7 @@ namespace HexadEditor.Utilities
             try
             {
                 var fs = new FileStream(path, FileMode.Open);
-                var serializer = new DataContractJsonSerializer(typeof(T));
+                var serializer = new DataContractSerializer(typeof(T));
                 T instance = (T)serializer.ReadObject(fs);
                 return instance;
             }
