@@ -24,5 +24,21 @@ namespace HexadEditor.GameProject
         {
             InitializeComponent();
         }
+
+        private void OnCreate_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var vm = DataContext as CreateProject;
+            var projectPath = vm.CreateNewProject(templateListBox.SelectedItem as ProjectTemplate); // based on selected template
+
+            // Close CreateProjectView Window
+            bool dialogResult = false;
+            var win = Window.GetWindow(this);
+            if (!string.IsNullOrEmpty(projectPath))
+            {
+                dialogResult = true;
+            }
+            win.DialogResult = dialogResult;
+            win.Close();
+        }
     }
 }

@@ -61,6 +61,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="GameProject\Project.cs" />
+    <Compile Include="GameProject\Scene.cs" />
     <Compile Include="Utilities\Serializer.cs" />
     <Page Include="GameProject\CreateProjectView.xaml">
       <SubType>Designer</SubType>
