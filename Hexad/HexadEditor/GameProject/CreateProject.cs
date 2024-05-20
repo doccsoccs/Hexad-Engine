@@ -146,6 +146,7 @@ namespace HexadEditor.GameProject
         /// </summary>
         public string CreateNewProject(ProjectTemplate template)
         {
+            // Check for validity in project name + path
             ValidateProjectPath();
             if (!IsValid)
             {
