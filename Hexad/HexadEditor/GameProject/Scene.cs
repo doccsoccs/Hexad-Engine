@@ -29,6 +29,21 @@ namespace HexadEditor.GameProject
         [DataMember]
         public Project Project { get; private set; }
 
+        private bool _isActive;
+        [DataMember]
+        public bool IsActive
+        {
+            get { return _isActive; }
+            set 
+            {
+                if (IsActive != value)
+                {
+                    _isActive = value;
+                    OnPropertyChanged(nameof(IsActive));
+                }
+            }
+        }
+
         public Scene(Project project, string name)
         {
             Debug.Assert(project != null);

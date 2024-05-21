@@ -36,6 +36,8 @@ namespace HexadEditor.GameProject
             if (!string.IsNullOrEmpty(projectPath))
             {
                 dialogResult = true;
+                var project = OpenProject.Open(new ProjectData() { ProjectName = vm.ProjectName, ProjectPath = projectPath });
+                win.DataContext = project;
             }
             win.DialogResult = dialogResult;
             win.Close();

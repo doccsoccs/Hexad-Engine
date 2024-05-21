@@ -13,7 +13,7 @@
     <StackPanel Background="DarkSeaGreen">
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
             <ListBox Width="195" Height="250" ItemsSource="{Binding ProjectTemplates}" 
-                     x:Name="templateListBox" SelectedIndex="2">
+                     x:Name="templateListBox" SelectedIndex="0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
