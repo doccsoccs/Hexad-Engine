@@ -23,6 +23,14 @@ namespace HexadEditor.GameProject
         public OpenProjectView()
         {
             InitializeComponent();
+
+            // The most recent project in the open projects window is automatically focused
+            Loaded += (s, e) =>
+            {
+                var item = projectsListBox.ItemContainerGenerator
+                .ContainerFromIndex(projectsListBox.SelectedIndex) as ListBoxItem;
+                item?.Focus();
+            };
         }
 
         private void OnOpen_Button_Click(object sender, RoutedEventArgs e)
@@ -45,6 +53,7 @@ namespace HexadEditor.GameProject
             if (project != null)
             {
                 dialogResult = true;
+                win.DataContext = project;
             }
             win.DialogResult = dialogResult;
             win.Close();

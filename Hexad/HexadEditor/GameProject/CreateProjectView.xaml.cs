@@ -23,6 +23,13 @@ namespace HexadEditor.GameProject
         public CreateProjectView()
         {
             InitializeComponent();
+
+            // The most recent template in the create projects window is automatically focused
+            Loaded += (s, e) =>
+            {
+                var item = templateListBox.ItemContainerGenerator.ContainerFromIndex(templateListBox.SelectedIndex) as ListBoxItem;
+                item?.Focus();
+            };
         }
 
         private void OnCreate_Button_Click(object sender, RoutedEventArgs e)
