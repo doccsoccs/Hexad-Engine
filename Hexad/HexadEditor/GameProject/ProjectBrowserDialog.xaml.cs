@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,13 @@ namespace HexadEditor.GameProject
         public ProjectBrowserDialog()
         {
             InitializeComponent();
+            Loaded += OnProjectBrowserDialogLoaded;
+        }
+
+        private void OnProjectBrowserDialogLoaded(object sender, RoutedEventArgs e)
+        {
+            Loaded -= OnProjectBrowserDialogLoaded;
+            Focus();
         }
 
         private void OnToggleButton_Click(object sender, RoutedEventArgs e)

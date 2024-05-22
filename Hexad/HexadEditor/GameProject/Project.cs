@@ -59,7 +59,7 @@ namespace HexadEditor.GameProject
         /// Adds a scene with a given name to the project
         /// </summary>
         /// <param name="sceneName"></param>
-        public void AddSceneInternal(string sceneName)
+        public void AddScene(string sceneName)
         {
             Debug.Assert(!string.IsNullOrEmpty(sceneName.Trim()));
             _scenes.Add(new Scene(this, sceneName));
@@ -69,7 +69,7 @@ namespace HexadEditor.GameProject
         /// Removes a scene from the project
         /// </summary>
         /// <param name="scene"></param>
-        public void RemoveSceneInternal(Scene scene)
+        public void RemoveScene(Scene scene)
         {
             Debug.Assert(_scenes.Contains(scene));
             _scenes.Remove(scene);
@@ -104,7 +104,7 @@ namespace HexadEditor.GameProject
             // Undo/Redo for adding a scene
             AddSceneCommand = new RelayCommand<object>(x =>
             {
-                AddSceneInternal($"New Scene {_scenes.Count}");
+                AddScene($"New Scene {_scenes.Count}");
                 var newScene = _scenes.Last();
                 var sceneIndex = _scenes.Count - 1;
 
@@ -112,7 +112,7 @@ namespace HexadEditor.GameProject
                 // 1) Undo - removes the new scene from the scenes list by calling the remove scene function
                 // 2) Redo - inserts the new scene back into the scenes list via the saved index
                 UndoRedo.Add(new UndoRedoAction(
-                    () => RemoveSceneInternal(newScene),
+                    () => RemoveScene(newScene),
                     () => _scenes.Insert(sceneIndex, newScene),
                     $"Add {newScene.Name}"));
             });
@@ -121,15 +121,15 @@ namespace HexadEditor.GameProject
             RemoveSceneCommand = new RelayCommand<Scene>(x =>
             {
                 var sceneIndex = _scenes.IndexOf(x);
-                RemoveSceneInternal(x);
+                RemoveScene(x);
 
                 // Creates an undoredo with actions that:
                 // 1) Undo - adds back the removed scene
                 // 2) Redo - removes the scene again if undone
                 UndoRedo.Add(new UndoRedoAction(
                     () => _scenes.Insert(sceneIndex, x),
-                    () => RemoveSceneInternal(x),
-                    $"Remove {x.Name}"));
+                    () => RemoveScene(x),
+                    $"Removed {x.Name}"));
             }, x => !x.IsActive); // <-- DO NOT REMOVE ACTIVE SCENES
 
             UndoCommand = new RelayCommand<object>(x => UndoRedo.Undo());

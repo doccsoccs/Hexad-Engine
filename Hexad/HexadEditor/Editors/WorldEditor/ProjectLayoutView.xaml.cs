@@ -1,4 +1,5 @@
-﻿using HexadEditor.GameProject;
+﻿using HexadEditor.Components;
+using HexadEditor.GameProject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,22 @@ namespace HexadEditor.Editors
         public ProjectLayoutView()
         {
             InitializeComponent();
+        }
+
+        private void OnAddGameEntity_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as Button;
+            var vm = btn.DataContext as Scene;
+            vm.AddGameEntityCommand.Execute(new GameEntity(vm) { Name = "Empty Game Entity"});
+        }
+
+        private void OnGameEntities_ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if ((sender as ListBox).SelectedItems.Count > 0) // Prevents getting null selection data when an object has no components
+            {
+                var entity = (sender as ListBox).SelectedItems[0];
+                GameEntityView.Instance.DataContext = entity;
+            }
         }
     }
 }
