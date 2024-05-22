@@ -1,5 +1,6 @@
 ﻿using HexadEditor.Components;
 using HexadEditor.GameProject;
+using HexadEditor.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,8 +39,29 @@ namespace HexadEditor.Editors
         {
             if ((sender as ListBox).SelectedItems.Count > 0) // Prevents getting null selection data when an object has no components
             {
-                var entity = (sender as ListBox).SelectedItems[0];
-                GameEntityView.Instance.DataContext = entity;
+                GameEntityView.Instance.DataContext = null;
+                var listBox = sender as ListBox;
+
+                if (e.AddedItems.Count > 0)
+                {
+                    GameEntityView.Instance.DataContext = listBox.SelectedItems[0];
+                }
+
+                var newSelection = listBox.SelectedItems.Cast<GameEntity>().ToList();
+                var previousSelection = newSelection.Except(e.AddedItems.Cast<GameEntity>()).Concat(e.RemovedItems.Cast<GameEntity>()).ToList();
+
+                Project.UndoRedo.Add(new UndoRedoAction(
+                    () => //undo
+                    { 
+                        listBox.UnselectAll();
+                        previousSelection.ForEach(x => (listBox.ItemContainerGenerator.ContainerFromItem(x) as ListBoxItem).IsSelected = true);
+                    },
+                    () => //redo
+                    {
+                        // 
+                    },
+                    "Selection changed"
+                ));
             }
         }
     }
