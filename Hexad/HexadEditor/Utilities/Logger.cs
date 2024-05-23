@@ -1,8 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Forms;
+using System.Windows.Interop;
+using System.Windows.Shapes;
+using Application = System.Windows.Application;
+using Path = System.IO.Path;
 
 namespace HexadEditor.Utilities
 {
@@ -22,9 +32,60 @@ namespace HexadEditor.Utilities
         public string Caller { get; }
         public int Line { get; }
         public string MetaData => $"{File}: {Caller} ({Line})";
+
+        public LogMessage(MessageType type, string msg, string file, string caller, int line)
+        {
+            Time = DateTime.Now;
+            MessageType = type;
+            Message = msg;
+            File = Path.GetFileName(file);
+            Caller = caller;
+            Line = line;
+        }
     }
 
-    class Logger
+    static class Logger
     {
+        private static int _messageFilter = (int)(MessageType.Info | MessageType.Warning | MessageType.Error);
+
+        private static readonly ObservableCollection<LogMessage> _messages = new ObservableCollection<LogMessage>();
+        public static ReadOnlyObservableCollection<LogMessage> Messages
+        { get; } = new ReadOnlyObservableCollection<LogMessage>(_messages);
+
+        public static CollectionViewSource FilteredMessages
+        { get; } = new CollectionViewSource() { Source = Messages };
+
+        public static async void Log(MessageType type, string msg,
+            [CallerFilePath]string file="", [CallerMemberName]string caller="",
+            [CallerLineNumber]int line = 0)
+        {
+            await Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                _messages.Add(new LogMessage(type, msg, file, caller, line));
+            }));
+        }
+
+        public static async void Clear()
+        {
+            await Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                _messages.Clear();
+            }));
+        }
+
+        public static void SetMessageFilter(int mask)
+        {
+            _messageFilter = mask;
+            FilteredMessages.View.Refresh();
+        }
+
+        static Logger()
+        {
+            FilteredMessages.Filter += (s, e) =>
+            {
+                var type = (int)(e.Item as LogMessage).MessageType;
+                e.Accepted = (type & _messageFilter) != 0;
+            };
+        }
     }
 }

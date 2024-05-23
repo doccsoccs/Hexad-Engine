@@ -184,7 +184,7 @@ namespace HexadEditor.GameProject
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                // TODO: log error
+                Logger.Log(MessageType.Error, $"Failed to create a new project from the template: {template.ProjectType}");
 
                 return string.Empty;
             }
@@ -236,7 +236,7 @@ namespace HexadEditor.GameProject
             catch(Exception ex) 
             {
                 Debug.WriteLine(ex.Message);
-                // TODO: log error
+                Logger.Log(MessageType.Error, "Failed to assemble project templates to be displayed in CreateProjectView.");
             }
         }
     }

@@ -99,7 +99,7 @@ namespace HexadEditor.GameProject
             catch (Exception ex) 
             { 
                 Debug.Write(ex.Message);
-                // TODO: log errors
+                Logger.Log(MessageType.Error, "Failed to read project data.");
             }
         }
     }

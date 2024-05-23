@@ -9,7 +9,7 @@ using System.Windows.Media.Media3D;
 namespace HexadEditor.Components
 {
     [DataContract]
-    public class Transform : Component
+    class Transform : Component
     {
         // Position
         private Vector3D _position;

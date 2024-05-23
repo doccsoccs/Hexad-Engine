@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace HexadEditor.Components
 {
+    interface IMSComponent { }
+
     [DataContract]
-    public class Component : ViewModelBase
+    abstract class Component : ViewModelBase
     {
         [DataMember]
         public GameEntity Owner { get; private set; }
@@ -19,5 +21,11 @@ namespace HexadEditor.Components
             Debug.Assert(owner != null);
             Owner = owner;
         }
+    }
+
+    // Uses a generic type to respresent the component this is a selction of
+    abstract class MSComponent<T> : ViewModelBase, IMSComponent where T : Component
+    {
+
     }
 }

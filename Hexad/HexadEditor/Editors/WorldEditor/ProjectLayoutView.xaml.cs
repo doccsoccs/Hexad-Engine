@@ -35,34 +35,34 @@ namespace HexadEditor.Editors
             vm.AddGameEntityCommand.Execute(new GameEntity(vm) { Name = "Empty Game Entity"});
         }
 
+        // Runs whenever the selected game entity in the editor window changes 
         private void OnGameEntities_ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if ((sender as ListBox).SelectedItems.Count > 0) // Prevents getting null selection data when an object has no components
-            {
-                GameEntityView.Instance.DataContext = null;
-                var listBox = sender as ListBox;
+            GameEntityView.Instance.DataContext = null;
+            var listBox = sender as ListBox;
+            var newSelection = listBox.SelectedItems.Cast<GameEntity>().ToList();
+            var previousSelection = newSelection.Except(e.AddedItems.Cast<GameEntity>()).Concat(e.RemovedItems.Cast<GameEntity>()).ToList();
 
-                if (e.AddedItems.Count > 0)
+            Project.UndoRedo.Add(new UndoRedoAction(
+                () => //undo
                 {
-                    GameEntityView.Instance.DataContext = listBox.SelectedItems[0];
-                }
+                    listBox.UnselectAll();
+                    previousSelection.ForEach(x => (listBox.ItemContainerGenerator.ContainerFromItem(x) as ListBoxItem).IsSelected = true);
+                },
+                () => //redo
+                {
+                    listBox.UnselectAll();
+                    newSelection.ForEach(x => (listBox.ItemContainerGenerator.ContainerFromItem(x) as ListBoxItem).IsSelected = true);
+                },
+                "Selection changed"
+            ));
 
-                var newSelection = listBox.SelectedItems.Cast<GameEntity>().ToList();
-                var previousSelection = newSelection.Except(e.AddedItems.Cast<GameEntity>()).Concat(e.RemovedItems.Cast<GameEntity>()).ToList();
-
-                Project.UndoRedo.Add(new UndoRedoAction(
-                    () => //undo
-                    { 
-                        listBox.UnselectAll();
-                        previousSelection.ForEach(x => (listBox.ItemContainerGenerator.ContainerFromItem(x) as ListBoxItem).IsSelected = true);
-                    },
-                    () => //redo
-                    {
-                        // 
-                    },
-                    "Selection changed"
-                ));
+            MSGameEntity msEntity = null;
+            if (newSelection.Any())
+            {
+                msEntity = new MSGameEntity(newSelection);
             }
+            GameEntityView.Instance.DataContext = msEntity;
         }
     }
 }

@@ -14,7 +14,7 @@ using System.Windows.Input;
 namespace HexadEditor.GameProject
 {
     [DataContract(Name = "Game")]
-    public class Project : ViewModelBase
+    class Project : ViewModelBase
     {
         public static string Extension { get; } = ".hexad";
 
@@ -77,7 +77,7 @@ namespace HexadEditor.GameProject
 
         public void Unload()
         {
-
+            UndoRedo.Reset(); // don't retain UNDO/REDO info between saves
         }
 
         public static Project Load(string file)
@@ -88,7 +88,8 @@ namespace HexadEditor.GameProject
 
         public static void Save(Project project)
         {
-            Serializer.ToFile(project, project.FullPath);
+            Serializer.ToFile(project, project.FullPath); // Write to .hexad file
+            Logger.Log(MessageType.Info, $"Saved project to {project.FullPath}");
         }
 
         [OnDeserialized] // Called when project instance is created
