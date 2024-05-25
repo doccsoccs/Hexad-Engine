@@ -7,7 +7,7 @@ class Vector
 	u32 size;
 
 public:
-	// Appends data to the end of a vector
+	// Appends data to the next NULL item of a vector, or end of one
 	void Add(T data)
 	{
 		// Create an array for the vector if there isn't one
@@ -19,16 +19,28 @@ public:
 
 		else 
 		{
+			// If there is a NULL item in the array insert the data there and exit the function
+			for (u32 i = 0; i < size; i++) 
+			{
+				if (vector[i] == NULL) vector[i] = data;
+				return;
+			}
+
 			// Copy the existing vector array
-			T* copyVector = new T[size];
-			for (int i = 0; i < size; i++) { copyVector[i] = priorityQueue[i]; }
+			T* copyVector = new T[size + 1];
+			for (u32 i = 0; i < size; i++) { copyVector[i] = vector[i]; }
 
-			// Clear the existing vector array without the new data
+			// Insert new data
+			copyVector[size] = data;
+
+			// Increment size
 			size++;
-			delete[] vector;
-			vector = new T[size];
 
-			// TODO AAAAAAs
+			// Delete old vector array
+			delete[] vector;
+
+			// Fill vector array with copied data
+			for (u32 i = 0; i < size; i++) { vector[i] = copyVector[i]; }
 
 			// Clear the copied queue from the heap
 			delete[] copyQueue;
@@ -36,12 +48,17 @@ public:
 		}
 	}
 
-	// Removes a piece of data from the vector
+	// Nulls a piece of data from the vector
 	void Remove(T data)
 	{
 		if (vector != nullptr) 
 		{
-
+			// Mark the first instance of the data found in the vector array as null
+			for (u32 i; i < size; i++)
+			{
+				if (vector[i] == data) vector[i] = NULL;
+				break;
+			}
 		}
 	}
 
@@ -90,7 +107,7 @@ public:
 		size = other.size;
 
 		vector = new T[size];
-		for (int i = 0; i < size; i++)
+		for (u32 i = 0; i < size; i++)
 		{
 			vector[i] = other.vector[i];
 		}
@@ -107,7 +124,7 @@ public:
 
 			// overwrite the vector array's data with the inputed vector's data
 			vector = new T[size];
-			for (int i = 0; i < size; i++)
+			for (u32 i = 0; i < size; i++)
 			{
 				vector[i] = other.vector[i];
 			}
