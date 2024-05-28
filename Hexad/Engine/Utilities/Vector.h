@@ -22,7 +22,7 @@ public:
 			// If there is a NULL item in the array insert the data there and exit the function
 			for (u32 i = 0; i < size; i++) 
 			{
-				if (vector[i] == NULL) vector[i] = data;
+				if (vector[i] == nullptr) vector[i] = data;
 				return;
 			}
 
@@ -56,8 +56,8 @@ public:
 			// Mark the first instance of the data found in the vector array as null
 			for (u32 i; i < size; i++)
 			{
-				if (vector[i] == data) vector[i] = NULL;
-				break;
+				if (vector[i] == data) vector[i] = nullptr;
+				return;
 			}
 		}
 	}
