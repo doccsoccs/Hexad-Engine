@@ -9,6 +9,6 @@ class engine_test : public test
 {
 public:
 	bool initialize() override { return true; }
-	bool run() override { }
-	bool shutdown() override { }
+	bool run() override { return true; }
+	bool shutdown() override { return true; }
 };

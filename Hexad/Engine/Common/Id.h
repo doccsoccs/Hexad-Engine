@@ -17,8 +17,8 @@ namespace hexad::id {
 	constexpr u32 min_deleted_elements{ 1024 };
 
 	// Determines how many bits to use for generation
-	using generation_type = std::conditional_t<generation_bits <= 16, std::conditional_t<generation_bits <= 8, u8, u16>, u32>;
-	static_assert(sizeof(generation_type) * 8 >= generation_bits);
+	using generation_type = std::conditional_t<internal::generation_bits <= 16, std::conditional_t<internal::generation_bits <= 8, u8, u16>, u32>;
+	static_assert(sizeof(generation_type) * 8 >= internal::generation_bits);
 	static_assert((sizeof(id_type) - sizeof(generation_type)) > 0);
 
 	// checks if an ID is valid
