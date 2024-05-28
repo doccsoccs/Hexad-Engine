@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Engine", "Engine\Engine.vcx
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexadEditor", "HexadEditor\HexadEditor.csproj", "{92373B40-E640-4E9C-BDD4-4C9D8E9C4A64}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EngineTest", "EngineTest\EngineTest.vcxproj", "{42D053A4-7686-486C-BFB9-78B1731336FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,10 @@ Global
 		{92373B40-E640-4E9C-BDD4-4C9D8E9C4A64}.Debug|x64.Build.0 = Debug|Any CPU
 		{92373B40-E640-4E9C-BDD4-4C9D8E9C4A64}.Release|x64.ActiveCfg = Release|Any CPU
 		{92373B40-E640-4E9C-BDD4-4C9D8E9C4A64}.Release|x64.Build.0 = Release|Any CPU
+		{42D053A4-7686-486C-BFB9-78B1731336FA}.Debug|x64.ActiveCfg = Debug|x64
+		{42D053A4-7686-486C-BFB9-78B1731336FA}.Debug|x64.Build.0 = Debug|x64
+		{42D053A4-7686-486C-BFB9-78B1731336FA}.Release|x64.ActiveCfg = Release|x64
+		{42D053A4-7686-486C-BFB9-78B1731336FA}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

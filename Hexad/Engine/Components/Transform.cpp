@@ -1,15 +1,13 @@
 #include "Transform.h"
 #include "Entity.h"
 
-using namespace hexad::math;
-
 namespace hexad::transform
 {
 	namespace {
 
-		utl::vector<v3> positions;
-		utl::vector<v4> rotations;
-		utl::vector<v3> scales;
+		utl::vector<math::v3> positions;
+		utl::vector<math::v4> rotations;
+		utl::vector<math::v3> scales;
 
 	}
 
@@ -22,9 +20,9 @@ namespace hexad::transform
 		// override that slot with the new values (filling holes in the data array)
 		if (positions.size() > entity_index)
 		{
-			rotations[entity_index] = v4(info.rotation);
-			positions[entity_index] = v3(info.position);
-			scales[entity_index] = v3(info.scale);
+			rotations[entity_index] = math::v4(info.rotation);
+			positions[entity_index] = math::v3(info.position);
+			scales[entity_index] = math::v3(info.scale);
 		}
 		else 
 		{
@@ -43,19 +41,19 @@ namespace hexad::transform
 	}
 
 	// Gets the value of a given transform element
-	v4 component::rotation() const
+	math::v4 component::rotation() const
 	{
 		assert(is_valid());
 		return rotations[id::index(_id)];
 	}
 
-	v3 component::position() const
+	math::v3 component::position() const
 	{
 		assert(is_valid());
 		return positions[id::index(_id)];
 	}
 
-	v3 component::scale() const
+	math::v3 component::scale() const
 	{
 		assert(is_valid());
 		return scales[id::index(_id)];
