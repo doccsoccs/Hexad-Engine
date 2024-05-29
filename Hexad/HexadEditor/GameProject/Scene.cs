@@ -56,16 +56,25 @@ namespace HexadEditor.GameProject
         public ICommand RemoveGameEntityCommand { get; private set; }
 
         // Adds a game entity to this scene
-        private void AddGameEntity(GameEntity entity)
+        private void AddGameEntity(GameEntity entity, int index = -1)
         {
             Debug.Assert(!_gameEntities.Contains(entity));
-            _gameEntities.Add(entity);
+            entity.IsActive = IsActive;
+            if(index == -1)
+            {
+                _gameEntities.Add(entity);
+            }
+            else
+            {
+                _gameEntities.Insert(index, entity);
+            }
         }
 
         // Removes a game entity from this scene
         private void RemoveGameEntity(GameEntity entity)
         {
             Debug.Assert(_gameEntities.Contains(entity));
+            entity.IsActive = false;
             _gameEntities.Remove(entity);
         }
 
@@ -79,6 +88,11 @@ namespace HexadEditor.GameProject
                 OnPropertyChanged(nameof(GameEntities));
             }
 
+            foreach (var entity in _gameEntities)
+            {
+                entity.IsActive = IsActive;
+            }
+
             // Undo/Redo for adding a game entity
             AddGameEntityCommand = new RelayCommand<GameEntity>(x =>
             {
@@ -90,7 +104,7 @@ namespace HexadEditor.GameProject
                 // 2) Redo - inserts the most recently removed entity via undo back into the scene
                 Project.UndoRedo.Add(new UndoRedoAction(
                     () => RemoveGameEntity(x),
-                    () => _gameEntities.Insert(entityIndex, x),
+                    () => AddGameEntity(x, entityIndex),
                     $"Add {x.Name} to {Name}"));
             });
 
@@ -104,7 +118,7 @@ namespace HexadEditor.GameProject
                 // 1) Undo - adds the game entity back to the scene
                 // 2) Redo - removes the the game entity that was last added back via undo
                 Project.UndoRedo.Add(new UndoRedoAction(
-                    () => _gameEntities.Insert(entityIndex, x),
+                    () => AddGameEntity(x, entityIndex),
                     () => RemoveGameEntity(x),
                     $"Removed {x.Name} from {Name}"));
             });

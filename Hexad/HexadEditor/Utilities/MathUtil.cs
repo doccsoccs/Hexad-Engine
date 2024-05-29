@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace HexadEditor.Utilities
 {
+    public static class ID
+    {
+        public static int INVALID_ID => -1; // CHANGE 'int' IF YOU CHANGE GENERATION BITS TO ANYTHING OTHER THAN 'u32'
+        public static bool IsValid(int id) => id != INVALID_ID; // checks if the id is valid
+    }
+
     public static class MathUtil
     {
         public static float Epsilon => 0.00001f;
