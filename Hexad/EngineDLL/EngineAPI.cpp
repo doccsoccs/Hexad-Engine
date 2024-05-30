@@ -53,8 +53,7 @@ namespace {
 
 // converts the game entity descriptor from the editor to an entity_info struct 
 // which is used to create the game entity in the engine
-EDITOR_INTERFACE 
-id::id_type CreateGameEntity(game_entity_descriptor* e)
+EDITOR_INTERFACE id::id_type CreateGameEntity(game_entity_descriptor* e)
 {
 	assert(e);
 	game_entity_descriptor& desc{ *e };
@@ -66,8 +65,7 @@ id::id_type CreateGameEntity(game_entity_descriptor* e)
 	return game_entity::create_game_entity(entity_info).get_id();
 }
 
-EDITOR_INTERFACE
-void RemoveGameEntity(id::id_type id)
+EDITOR_INTERFACE void RemoveGameEntity(id::id_type id)
 {
 	assert(id::is_valid(id));
 	game_entity::remove_game_entity(entity_from_id(id));

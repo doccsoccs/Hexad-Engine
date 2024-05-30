@@ -1,8 +1,8 @@
-#pragma commment(lib, "engine.lib")
+#pragma comment(lib, "engine.lib")
 
 // dllmain.cpp : Defines the entry point for the DLL application.
 #define WIN32_LEAN_AND_MEAN
-#include <WinBase.h>
+#include <Windows.h>
 #include <crtdbg.h>
 
 BOOL APIENTRY DllMain( HMODULE hModule,
