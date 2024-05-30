@@ -40,5 +40,27 @@ namespace HexadEditor.Dictionary
             }
 
         }
+
+        // Closes the editor window
+        private void OnClose_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var window = (Window)((FrameworkElement)sender).TemplatedParent;
+            window.Close();
+        }
+
+        // Maximize / Restore the editor window
+        private void OnMaximizeRestore_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var window = (Window)((FrameworkElement)sender).TemplatedParent;
+            window.WindowState = (window.WindowState == WindowState.Normal) ?
+                WindowState.Maximized : WindowState.Normal;
+        }
+
+        // Minimize the editor window
+        private void OnMinimize_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var window = (Window)((FrameworkElement)sender).TemplatedParent;
+            window.WindowState = WindowState.Minimized;
+        }
     }
 }

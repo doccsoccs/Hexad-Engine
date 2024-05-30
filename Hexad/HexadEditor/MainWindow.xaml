@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:HexadEditor"
         xmlns:editors="clr-namespace:HexadEditor.Editors"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
-        Title="HexadEditor" Height="800" Width="1200">
+        Title="HexadEditor" Height="800" Width="1200" 
+        Style="{StaticResource HexadWindowStyle}">
     <Grid>
         <editors:WorldEditorView/>
     </Grid>
