@@ -10,42 +10,48 @@
     <UserControl.DataContext>
         <local:CreateProject/>
     </UserControl.DataContext>
-    <StackPanel>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
-            <ListBox Width="195" Height="250" ItemsSource="{Binding ProjectTemplates}" 
+    <Border CornerRadius="3" Background="{DynamicResource Editor.Window.GrayBrush3}" Width="700"
+            HorizontalAlignment="Center" Margin="0,0,0,17">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+                <ListBox Width="195" Height="250" ItemsSource="{Binding ProjectTemplates}" 
                      x:Name="templateListBox" SelectedIndex="0">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="{Binding Icon}" Margin="0,0,5,0"/>
-                            <TextBlock Text="{Binding ProjectType}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-            <Border Width="400" Height="250" Margin="5,0,0,0">
-                <Border.Background>
-                    <ImageBrush ImageSource="{Binding Path=SelectedItem.Screenshot, ElementName=templateListBox}"/>
-                </Border.Background>
-            </Border>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{Binding Icon}" Margin="0,0,5,0"/>
+                                <TextBlock Text="{Binding ProjectType}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Border Width="400" Height="250" Margin="5,0,0,0">
+                    <Border.Background>
+                        <ImageBrush ImageSource="{Binding Path=SelectedItem.Screenshot, ElementName=templateListBox}"/>
+                    </Border.Background>
+                </Border>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
                     Margin="0,25,0,0">
-            <TextBlock Text="Name" Width="50"/>
-            <TextBox Width="550" Text="{Binding ProjectName, UpdateSourceTrigger=PropertyChanged}"/>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                <TextBlock Text="Name" Width="50" Style="{DynamicResource LightTextBlockStyle}"/>
+                <TextBox Width="550" Text="{Binding ProjectName, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{DynamicResource TextBoxStyle}" Padding="3"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
                     Margin="0,5,0,0">
-            <TextBlock Text="Path" Width="50"/>
-            <TextBox Width="500" Text="{Binding ProjectPath, UpdateSourceTrigger=PropertyChanged}"/>
-            <Button Content="Browse" Width="45" Margin="5,0,0,0"/>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                <TextBlock Text="Path" Width="50" Style="{DynamicResource LightTextBlockStyle}"/>
+                <TextBox Width="500" Text="{Binding ProjectPath, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{DynamicResource TextBoxStyle}" Padding="3"/>
+                <Button Content="Browse" Width="45" Margin="5,0,0,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
                     Margin="0,20,0,0">
-            <Button Content="Create" Width="96" IsDefault="True" IsEnabled="{Binding IsValid}"
-                    Click="OnCreate_Button_Click"/>
-            <Button Content="Exit" Width="96" Margin="30,0,0,0" IsCancel="True"/>
+                <Button Content="Create" Width="96" IsDefault="True" IsEnabled="{Binding IsValid}"
+                        Click="OnCreate_Button_Click"/>
+                <Button Content="Exit" Width="96" Margin="30,0,0,0" IsCancel="True"/>
+            </StackPanel>
+            <TextBlock Text="{Binding ErrorMsg}" Margin="0,12,0,0" HorizontalAlignment="Center"
+                       Style="{DynamicResource ErrorTextBlockStyle}"/>
         </StackPanel>
-        <TextBlock Text="{Binding ErrorMsg}" Margin="0,15,0,0" HorizontalAlignment="Center" />
-    </StackPanel>
+    </Border>
 </UserControl>

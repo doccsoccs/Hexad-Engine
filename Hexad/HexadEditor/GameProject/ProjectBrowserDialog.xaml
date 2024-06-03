@@ -12,36 +12,38 @@
     <Window.Resources>
         <Style TargetType="{x:Type ToggleButton}">
             <Setter Property="FontSize" Value="32"/>
-            <Setter Property="FontFamily" Value="Bahnschrift condensed"/>
+            <Setter Property="FontFamily" Value="Bahnschrift"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="Foreground" Value="{DynamicResource Editor.Disabled.FontBrush"/>
+            <Setter Property="Foreground" Value="{DynamicResource Editor.Disabled.FontBrush}"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Padding" Value="1"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ToggleButton}">
-                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
-                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                        </Border>
+                        <TextBlock Text="{TemplateBinding Button.Content}" Style="{x:Null}">
+                            <TextBlock.Effect>
+                                <DropShadowEffect BlurRadius="2" ShadowDepth="1" Opacity="0.6"/>
+                            </TextBlock.Effect>
+                        </TextBlock>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="Button.IsDefaulted" Value="true">
-                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            <!--Toggle Button Disabled-->
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" Value="{DynamicResource Editor.Window.GrayBrush4}"/>
                             </Trigger>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
-                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+                            <!--The Selected Toggle Button Is WHITE-->
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Foreground" Value="White"/>
                             </Trigger>
-                            <Trigger Property="IsPressed" Value="true">
-                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
-                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
-                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
-                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
-                            </Trigger>
+                            <!--Hover Toggle Button Style-->
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                    <Condition Property="IsChecked" Value="False"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Foreground" Value="{DynamicResource Editor.FontBrush}"/>
+                            </MultiTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -55,13 +57,16 @@
             <RowDefinition Height="auto"/>
             <RowDefinition />
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="10">
-            <ToggleButton Content="Open Project" x:Name="openProjectButton" FontSize="15" Margin="0,0,0,0"
-                          Click="OnToggleButton_Click" IsChecked="True" Padding="5" Width="100"/>
-            <ToggleButton Content="Create Project" x:Name="createProjectButton" FontSize="15" Margin="10,0,0,0"
-                          Click="OnToggleButton_Click" IsChecked="False" Padding="2" Width="100"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="15">
+            <ToggleButton Content="Open Project" x:Name="openProjectButton" FontSize="15" Margin="0,0,20,0"
+                          Click="OnToggleButton_Click" IsChecked="True" Padding="5" Width="Auto"/>
+            <ToggleButton Content="Create Project" x:Name="createProjectButton" FontSize="15" Margin="0,0,0,0"
+                          Click="OnToggleButton_Click" IsChecked="False" Padding="5" Width="Auto"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Row="1" x:Name="browserContent">
+            <StackPanel.Effect>
+                <DropShadowEffect Opacity="0.6" BlurRadius="15" ShadowDepth="2"/>
+            </StackPanel.Effect>
             <local:OpenProjectView x:Name="openProjectView"/>
             <local:CreateProjectView x:Name="createProjectView"/>
         </StackPanel>

@@ -14,7 +14,7 @@
     <Color x:Key="Editor.FontColor">#ffdddddd</Color>
 
     <!--Color Definitions-->
-    <Color x:Key="Editor.RedColor">#ffff5a6a</Color>
+    <Color x:Key="Editor.RedColor">#ffaf5a6a</Color>
     <Color x:Key="Editor.GreenColor">#ff90ee90</Color>
     <Color x:Key="Editor.BlueColor">#ff80deff</Color>
     <Color x:Key="Editor.OrangeColor">#ffffd067</Color>
