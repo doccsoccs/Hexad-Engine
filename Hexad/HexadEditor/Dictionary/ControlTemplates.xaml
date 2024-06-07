@@ -1,11 +1,10 @@
 ﻿<ResourceDictionary x:Class="HexadEditor.Dictionary.ControlTemplates"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:HexadEditor.Dictionary">
+                    xmlns:local="clr-namespace:HexadEditor.Dictionary"
+                    xmlns:ctlr="clr-namespace:HexadEditor.Utilities.Controls">
 
-    <!--BUTTON STYLE-->
-
-    <!--TEXTBOX STYLE-->
+    <!--TEXTBOX STYLES-->
     <Style TargetType="{x:Type TextBox}" x:Key="TextBoxStyle">
         <Setter Property="Foreground" Value="{DynamicResource Editor.FontBrush}"/>
         <Setter Property="Background" Value="{DynamicResource Editor.Window.GrayBrush2}"/>
@@ -18,6 +17,12 @@
 
     <Style TargetType="{x:Type TextBox}" x:Key="{x:Type TextBox}" BasedOn="{StaticResource TextBoxStyle}">
         <EventSetter Event="KeyDown" Handler="OnTextBox_KeyDown"/>
+    </Style>
+
+    <!--TEXTBOX (NumberBox / Rename)-->
+    <Style TargetType="{x:Type TextBox}" x:Key="TextBoxStyle_WithRename" BasedOn="{StaticResource TextBoxStyle}">
+        <EventSetter Event="KeyDown" Handler="OnTextBoxRename_KeyDown"/>
+        <EventSetter Event="KeyDown" Handler="OnTextBoxRename_LostFocus"/>
     </Style>
 
     <!--LIGHT TEXTBLOCK STYLE-->
@@ -547,6 +552,79 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>    
+    </Style>
+
+    <!--Applies a style to all NumberBox elements-->
+    <Style TargetType="{x:Type ctlr:NumberBox}" x:Key="{x:Type ctlr:NumberBox}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ctlr:NumberBox}">
+                    <Grid>
+                        <TextBlock x:Name="PART_textBlock" HorizontalAlignment="Center"
+                                   Text="{Binding Value, RelativeSource={RelativeSource TemplatedParent}}">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Cursor" Value="SizeWE"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBox x:Name="PART_textBox" BorderThickness="0" Padding="0"
+                                 Text="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=Explicit}"
+                                 Foreground="{TemplateBinding Foreground}" Visibility="Collapsed"
+                                 Style="{StaticResource TextBoxStyle_WithRename}" HorizontalAlignment="Center"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Visibility, ElementName=PART_textBox}" Value="Visible">
+                            <Setter Property="Visibility" TargetName="PART_textBlock" Value="Collapsed"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Value, RelativeSource={RelativeSource Self}}" Value="{x:Null}">
+                            <Setter Property="Background" TargetName="PART_textBlock" Value="{DynamicResource Editor.Disabled.FontBrush}"/>
+                            <Setter Property="ToolTip" TargetName="PART_textBlock" Value="Mixed values"/>
+                            <Setter Property="MinWidth" TargetName="PART_textBlock" Value="20"/>
+                        </DataTrigger>
+                        
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!--VectorBox-->
+    <Style TargetType="{x:Type ctlr:VectorBox}" x:Key="{x:Type ctlr:VectorBox}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Background" Value="{DynamicResource Editor.Window.GrayBrush2}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource Editor.Window.GrayBrush5}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ctlr:VectorBox}">
+                    <ControlTemplate.Resources>
+                        <Style TargetType="{x:Null ctlr:NumberBox}" BasedOn="{StaticResource {x:Type ctlr:NumberBox}}">
+                            <Setter Property="MinWidth" Value="50"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="ToolTipService.InitialShowDelay" Value="3000"/>
+                            <Setter Property="ToolTipService.BetweenShowDelay" Value="1000"/>
+                            <Setter Property="Multiplier" Value="{Binding Multiplier, RelativeSource={RelativeSource TemplatedParent}}"/>
+                        </Style>
+                    </ControlTemplate.Resources>
+                    <Border x:Name="border" SnapsToDevicePixels="True" Margin="0,2,0,3"
+                            Background="{TemplateBinding Background}" Padding="5,2"
+                            BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="10"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid x:Name="grid">
+                            <Grid.ColumnDefinitions>
+                                
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
 </ResourceDictionary>

@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:HexadEditor.Editors"
              xmlns:utl="clr-namespace:HexadEditor.Utilities"
+             xmlns:ctlr="clr-namespace:HexadEditor.Utilities.Controls"
              mc:Ignorable="d" Focusable="True"
              d:DesignHeight="450" d:DesignWidth="800">
     
@@ -92,6 +93,12 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
+                
+                <!--NumberBox Test-->
+                <Border Background="DimGray">
+                    <ctlr:NumberBox VerticalAlignment="Center" Value="0" Foreground="White" Multiplier="1"/>
+                </Border>
+                
                 <GridSplitter Grid.Row="1" Height="5" HorizontalAlignment="Stretch"
                           VerticalAlignment="Top" Background="Transparent"/>
                 <TabControl Grid.Row="1" Margin="0,5,0,0"
