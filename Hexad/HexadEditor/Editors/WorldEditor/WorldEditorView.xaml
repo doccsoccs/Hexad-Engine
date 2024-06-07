@@ -8,6 +8,63 @@
              mc:Ignorable="d" Focusable="True"
              d:DesignHeight="450" d:DesignWidth="800">
     
+    <!--Tab Item Style-->
+    <UserControl.Resources>
+        <Style TargetType="{x:Type TabItem}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+            <Setter Property="Foreground" Value="{DynamicResource Editor.FontBrush}"/>
+            <Setter Property="Background" Value="{DynamicResource Editor.Window.GrayBrush1}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource Editor.Window.GrayBrush4}"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Padding" Value="6,2,6,2"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Grid x:Name="templateRoot" SnapsToDevicePixels="true">
+                            <Border x:Name="mainBorder" Background="{TemplateBinding Background}" CornerRadius="4,4,0,0" 
+                                    BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,1,1,0" Margin="0">
+                                <Border x:Name="innerBorder" Background="{DynamicResource Editor.Window.GrayBrush6}" 
+                                        BorderBrush="{DynamicResource Editor.Window.GrayBrush4}" 
+                                        BorderThickness="1,1,1,0" Margin="-1" Opacity="0" />
+                            </Border>
+                            <ContentPresenter x:Name="contentPresenter" ContentSource="Header" Focusable="False" 
+                                              HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <!--MOUSE OVER-->
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="BorderBrush" TargetName="mainBorder"
+                                        Value="{Binding Background, ElementName=innerBorder}"/>
+                                <Setter Property="Background" TargetName="mainBorder">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="{DynamicResource Editor.Window.GrayColor4}"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+
+                            <!--CHECKED BOX-->
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter Property="Background" TargetName="mainBorder">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="{DynamicResource Editor.Window.GrayColor5}"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+
+                            <!--DISABLED-->
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="{DynamicResource Editor.Disabled.FontBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    
     <!--KEYBINDS-->
     <UserControl.InputBindings>
         <KeyBinding Command="{Binding UndoCommand}" Key="Z" Modifiers="Ctrl"/>
@@ -36,8 +93,9 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <GridSplitter Grid.Row="1" Height="5" HorizontalAlignment="Stretch"
-                          VerticalAlignment="Top"/>
-                <TabControl Grid.Row="1">
+                          VerticalAlignment="Top" Background="Transparent"/>
+                <TabControl Grid.Row="1" Margin="0,5,0,0"
+                            Background="{DynamicResource Editor.Window.GrayBrush2}">
                     <TabItem Header="Undo History">
                         <utl:UndoRedoView DataContext="{Binding UndoRedo}" Grid.Row="1"/>
                     </TabItem>
@@ -47,16 +105,17 @@
                 </TabControl>
             </Grid>
             <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Left"
-                      VerticalAlignment="Stretch"/>
+                      VerticalAlignment="Stretch" Background="Transparent"/>
             <Grid Grid.Column="1" Margin="5,0,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <GridSplitter Grid.Row="1" Height="5" HorizontalAlignment="Stretch"
-                          VerticalAlignment="Top"/>
-                <local:ProjectLayoutView/>
-                <local:GameEntityView Grid.Row="1" Margin="5,10,0,0"/>
+                          VerticalAlignment="Top" Background="Transparent"/>
+                <local:ProjectLayoutView Background="{DynamicResource Editor.Window.GrayBrush3}"/>
+                <local:GameEntityView Grid.Row="1" Margin="0,5,0,0"
+                                      Background="{DynamicResource Editor.Window.GrayBrush3}"/>
             </Grid>
         </Grid>
     </Grid>
