@@ -24,7 +24,6 @@ namespace HexadEditor.Utilities.Controls
             get => (double)GetValue(MultiplierProperty);
             set => SetValue(MultiplierProperty, value);
         }
-
         public static readonly DependencyProperty MultiplierProperty =
             DependencyProperty.Register(nameof(Multiplier), typeof(double), typeof(NumberBox),
                 new PropertyMetadata(1.0));
@@ -35,7 +34,6 @@ namespace HexadEditor.Utilities.Controls
             get => (string)GetValue(ValueProperty);
             set => SetValue(ValueProperty, value);
         }
-
         // Dependency Property --> register and connect to regular property
         public static readonly DependencyProperty ValueProperty = 
             DependencyProperty.Register(nameof(Value), typeof(string), typeof(NumberBox), 
@@ -70,6 +68,7 @@ namespace HexadEditor.Utilities.Controls
         }
 
         // On Release Left Click on a NumberBox Element
+        // HOW IT KNOWS WHEN YOU WANT TO TYPE IN A NUMBER BY HAND
         private void OnTextBlock_Mouse_LBU(object sender, MouseButtonEventArgs e)
         {
             if (_captured)
@@ -77,7 +76,7 @@ namespace HexadEditor.Utilities.Controls
                 Mouse.Capture(null);
                 _captured = false;
                 e.Handled = true;
-                if (!_valueChanged && GetTemplateChild("Part_textBox") is TextBox textBox)
+                if (!_valueChanged && GetTemplateChild("PART_textBox") is TextBox textBox)
                 {
                     textBox.Visibility = Visibility.Visible;
                     textBox.Focus();
@@ -111,7 +110,8 @@ namespace HexadEditor.Utilities.Controls
         static NumberBox()
         {
             // Override default style key property
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(NumberBox), new FrameworkPropertyMetadata(typeof(NumberBox)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(NumberBox), 
+                new FrameworkPropertyMetadata(typeof(NumberBox)));
         }
     }
 }

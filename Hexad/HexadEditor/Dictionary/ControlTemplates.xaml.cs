@@ -11,7 +11,7 @@ namespace HexadEditor.Dictionary
 {
     public partial class ControlTemplates : ResourceDictionary
     {
-        private void OnTextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void OnTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             var textBox = sender as TextBox;
             var exp = textBox.GetBindingExpression(TextBox.TextProperty);
@@ -57,7 +57,7 @@ namespace HexadEditor.Dictionary
                 {
                     exp.UpdateSource();
                 }
-                textBox.Visibility = Visibility.Visible;
+                textBox.Visibility = Visibility.Collapsed;
                 e.Handled = true;
             }
 
@@ -69,7 +69,8 @@ namespace HexadEditor.Dictionary
             }
         }
 
-        private void OnTextBoxRename_LostFocus(object sender, KeyEventArgs e)
+        // Collapse an overtop textbox when on lost focus
+        private void OnTextBoxRename_LostFocus(object sender, RoutedEventArgs e)
         {
             var textBox = sender as TextBox;
             var exp = textBox.GetBindingExpression(TextBox.TextProperty);

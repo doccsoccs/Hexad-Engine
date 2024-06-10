@@ -8,8 +8,33 @@ using System.Windows.Controls;
 
 namespace HexadEditor.Utilities.Controls
 {
+    public enum VectorType
+    {
+        Vector2, 
+        Vector3, 
+        Vector4
+    }
+
     class VectorBox : Control
     {
+        public VectorType VectorType
+        {
+            get => (VectorType)GetValue(VectorTypeProperty);
+            set => SetValue(VectorTypeProperty, value);
+        }
+        public static readonly DependencyProperty VectorTypeProperty =
+            DependencyProperty.Register(nameof(VectorType), typeof(VectorType), typeof(VectorBox),
+                new PropertyMetadata(VectorType.Vector3));
+
+        public Orientation Orientation
+        {
+            get => (Orientation)GetValue(OrientationProperty);
+            set => SetValue(OrientationProperty, value);
+        }
+        public static readonly DependencyProperty OrientationProperty =
+            DependencyProperty.Register(nameof(Orientation), typeof(Orientation), typeof(VectorBox),
+                new PropertyMetadata(Orientation.Horizontal));
+
         public string X
         {
             get => (string)GetValue(XProperty);
@@ -52,7 +77,7 @@ namespace HexadEditor.Utilities.Controls
             set => SetValue(MultiplierProperty, value);
         }
         public static readonly DependencyProperty MultiplierProperty =
-            DependencyProperty.Register(nameof(Multiplier), typeof(double), typeof(NumberBox),
+            DependencyProperty.Register(nameof(Multiplier), typeof(double), typeof(VectorBox),
                 new PropertyMetadata(1.0));
 
         static VectorBox()
