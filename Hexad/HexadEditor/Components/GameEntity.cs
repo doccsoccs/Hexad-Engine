@@ -160,43 +160,43 @@ namespace HexadEditor.Components
         private readonly ObservableCollection<IMSComponent> _componenets = new ObservableCollection<IMSComponent>();
         public ReadOnlyObservableCollection<IMSComponent> Components { get; }
 
+        // Generate a list of selected components of the same type
+        private void MakeComponentList()
+        {
+            _componenets.Clear();
+            var firstEntity = SelectedEntities.FirstOrDefault();
+            if (firstEntity == null) return;
+            
+            // Go through every component in the first of the selected entities --> GET ITS TYPE
+            // If all other selected items have the same type of component, they are added to the list of components
+            foreach (var component in firstEntity.Components)
+            {
+                var type = component.GetType();
+                if (!SelectedEntities.Skip(1).Any(entity => entity.GetComponent(type) == null))
+                {
+                    Debug.Assert(Components.FirstOrDefault(x => x.GetType() == type) == null);
+                    _componenets.Add(component.GetMultiselectionComponent(this));
+                }
+            }
+        }
+
         // Returns a float, bool, or string so long as all selected values are the same
         // Returns NULL if not
-        private static float? GetMixedValue(List<GameEntity> entities, Func<GameEntity, float> getProperty)
+        public static float? GetMixedValue<T>(List<T> objects, Func<T, float> getProperty)
         {
-            var value = getProperty(entities.First());
-            foreach (var entity in entities.Skip(1))
-            {
-                if (value.IsTheSameAs(getProperty(entity)))
-                {
-                    return null;
-                }
-            }
-            return value;
+            var value = getProperty(objects.First());
+            return objects.Skip(1).Any(x => !getProperty(x).IsTheSameAs(value)) ? (float?)null : value;
         }
-        private static bool? GetMixedValue(List<GameEntity> entities, Func<GameEntity, bool> getProperty)
+        public static bool? GetMixedValue<T>(List<T> objects, Func<T, bool> getProperty)
         {
-            var value = getProperty(entities.First());
-            foreach (var entity in entities.Skip(1))
-            {
-                if (value != getProperty(entity))
-                {
-                    return null;
-                }
-            }
-            return value;
+            var value = getProperty(objects.First());
+            return objects.Skip(1).Any(x => getProperty(x) != value) ? (bool?)null : value;
+
         }
-        private static string GetMixedValue(List<GameEntity> entities, Func<GameEntity, string> getProperty)
+        public static string GetMixedValue<T>(List<T> objects, Func<T, string> getProperty)
         {
-            var value = getProperty(entities.First());
-            foreach (var entity in entities.Skip(1))
-            {
-                if (value != getProperty(entity))
-                {
-                    return null;
-                }
-            }
-            return value;
+            var value = getProperty(objects.First());
+            return objects.Skip(1).Any(x => getProperty(x) != value) ? null : value;
         }
 
         protected virtual bool UpdateGameEntities(string propertyName)
@@ -222,6 +222,7 @@ namespace HexadEditor.Components
         {
             _enableUpdates = false;
             UpdateMSGameEntity();
+            MakeComponentList();
             _enableUpdates = true;
         }
 

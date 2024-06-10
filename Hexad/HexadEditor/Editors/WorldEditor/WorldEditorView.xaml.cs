@@ -32,7 +32,7 @@ namespace HexadEditor.Editors
         {
             Loaded -= OnWorldEditorViewLoaded;
             Focus();
-            ((INotifyCollectionChanged)Project.UndoRedo.UndoList).CollectionChanged += (s, eventArgs) => Focus();
+            //((INotifyCollectionChanged)Project.UndoRedo.UndoList).CollectionChanged += (s, eventArgs) => Focus();
         }
     }
 }

@@ -106,6 +106,8 @@
                         <ctlr:VectorBox X="0" Y="1" Z="2" W="3" VectorType="Vector2" Orientation="Vertical"/>
                         <ctlr:VectorBox X="0" Y="1" Z="2" W="3" VectorType="Vector3" Orientation="Vertical"/>
                         <ctlr:VectorBox X="0" Y="1" Z="2" W="3" VectorType="Vector4" Orientation="Vertical"/>
+
+                        <ctlr:ScalarBox Value="10" Multiplier="10"/>
                     </StackPanel>                
                 </Border>
                 
