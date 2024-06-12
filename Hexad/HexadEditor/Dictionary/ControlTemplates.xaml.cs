@@ -69,14 +69,22 @@ namespace HexadEditor.Dictionary
             }
         }
 
-        // Collapse an overtop textbox when on lost focus
+        // Collapse an overtop textbox for SCALARBOX / VECTORBOX / NUMBERBOX when lost focus
         private void OnTextBoxRename_LostFocus(object sender, RoutedEventArgs e)
         {
             var textBox = sender as TextBox;
             var exp = textBox.GetBindingExpression(TextBox.TextProperty);
             if (exp != null)
             {
-                exp.UpdateTarget();
+                //exp.UpdateTarget();
+                if (textBox.Tag is ICommand command && command.CanExecute(textBox.Text))
+                {
+                    command.Execute(textBox.Text);
+                }
+                else
+                {
+                    exp.UpdateSource();
+                }
                 textBox.MoveFocus(new TraversalRequest(FocusNavigationDirection.Previous));
                 textBox.Visibility = Visibility.Collapsed;
             }
