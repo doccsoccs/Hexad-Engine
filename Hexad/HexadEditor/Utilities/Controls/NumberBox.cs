@@ -65,6 +65,9 @@ namespace HexadEditor.Utilities.Controls
             // Get the current mouse's X position relative to THIS control
             _multiplier = 0.01;
             _mouseXStart = e.GetPosition(this).X;
+
+            // Make sure to not be focused elsewhere
+            Focus();
         }
 
         // On Release Left Click on a NumberBox Element

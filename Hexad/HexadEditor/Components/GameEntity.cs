@@ -45,9 +45,10 @@ namespace HexadEditor.Components
                         EntityId = EngineAPI.CreateGameEntity(this);
                         Debug.Assert(ID.IsValid(_entityId));
                     }
-                    else
+                    else if (ID.IsValid(EntityId))
                     {
                         EngineAPI.RemoveGameEntity(this);
+                        EntityId = ID.INVALID_ID;
                     }
                     OnPropertyChanged(nameof(IsActive));
                 }
@@ -159,6 +160,11 @@ namespace HexadEditor.Components
 
         private readonly ObservableCollection<IMSComponent> _componenets = new ObservableCollection<IMSComponent>();
         public ReadOnlyObservableCollection<IMSComponent> Components { get; }
+
+        public T GetMSComponent<T>() where T : IMSComponent
+        {
+            return (T)Components.FirstOrDefault(x => x.GetType() == typeof(T));
+        }
 
         // Generate a list of selected components of the same type
         private void MakeComponentList()

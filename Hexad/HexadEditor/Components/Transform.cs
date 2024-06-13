@@ -79,7 +79,7 @@ namespace HexadEditor.Components
             get => _posX;
             set
             {
-                if (_posX.IsTheSameAs(value)) // Approximates floating point values using utilities
+                if (!_posX.IsTheSameAs(value)) // Approximates floating point values using utilities
                 {
                     _posX = value;
                     OnPropertyChanged(nameof(PosX));
@@ -94,7 +94,7 @@ namespace HexadEditor.Components
             get => _posY;
             set
             {
-                if (_posY.IsTheSameAs(value)) // Approximates floating point values using utilities
+                if (!_posY.IsTheSameAs(value)) // Approximates floating point values using utilities
                 {
                     _posY = value;
                     OnPropertyChanged(nameof(PosY));
@@ -109,7 +109,7 @@ namespace HexadEditor.Components
             get => _posZ;
             set
             {
-                if (_posZ.IsTheSameAs(value)) // Approximates floating point values using utilities
+                if (!_posZ.IsTheSameAs(value)) // Approximates floating point values using utilities
                 {
                     _posZ = value;
                     OnPropertyChanged(nameof(PosZ));
@@ -124,7 +124,7 @@ namespace HexadEditor.Components
             get => _rotX;
             set
             {
-                if (_rotX.IsTheSameAs(value)) // Approximates floating point values using utilities
+                if (!_rotX.IsTheSameAs(value)) // Approximates floating point values using utilities
                 {
                     _rotX = value;
                     OnPropertyChanged(nameof(RotX));
@@ -139,7 +139,7 @@ namespace HexadEditor.Components
             get => _rotY;
             set
             {
-                if (_rotY.IsTheSameAs(value)) // Approximates floating point values using utilities
+                if (!_rotY.IsTheSameAs(value)) // Approximates floating point values using utilities
                 {
                     _rotY = value;
                     OnPropertyChanged(nameof(RotY));
@@ -154,7 +154,7 @@ namespace HexadEditor.Components
             get => _rotZ;
             set
             {
-                if (_rotZ.IsTheSameAs(value)) // Approximates floating point values using utilities
+                if (!_rotZ.IsTheSameAs(value)) // Approximates floating point values using utilities
                 {
                     _rotZ = value;
                     OnPropertyChanged(nameof(RotZ));
@@ -169,7 +169,7 @@ namespace HexadEditor.Components
             get => _scaleX;
             set
             {
-                if (_scaleX.IsTheSameAs(value)) // Approximates floating point values using utilities
+                if (!_scaleX.IsTheSameAs(value)) // Approximates floating point values using utilities
                 {
                     _scaleX = value;
                     OnPropertyChanged(nameof(ScaleX));
@@ -184,7 +184,7 @@ namespace HexadEditor.Components
             get => _scaleY;
             set
             {
-                if (_scaleY.IsTheSameAs(value)) // Approximates floating point values using utilities
+                if (!_scaleY.IsTheSameAs(value)) // Approximates floating point values using utilities
                 {
                     _scaleY = value;
                     OnPropertyChanged(nameof(ScaleY));
@@ -199,7 +199,7 @@ namespace HexadEditor.Components
             get => _scaleZ;
             set
             {
-                if (_scaleZ.IsTheSameAs(value)) // Approximates floating point values using utilities
+                if (!_scaleZ.IsTheSameAs(value)) // Approximates floating point values using utilities
                 {
                     _scaleZ = value;
                     OnPropertyChanged(nameof(ScaleZ));
