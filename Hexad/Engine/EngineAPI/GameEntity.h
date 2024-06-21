@@ -3,6 +3,7 @@
 #include "..\Components\ComponentsCommon.h"
 #include "TransformComponent.h"
 #include "ScriptComponent.h"
+#include <string>
 
 namespace hexad {
 
@@ -44,6 +45,10 @@ namespace hexad {
 		namespace detail {
 			using script_ptr = std::unique_ptr<entity_script>;
 			using script_creator = script_ptr(*)(game_entity::entity entity);
+			using string_hash = std::hash<std::string>;
+
+			// Returns a byte
+			u8 register_script(size_t, script_creator);
 
 			template<class script_class>
 			script_ptr create_script(game_entity::entity entity)
@@ -55,6 +60,14 @@ namespace hexad {
 			}
 		} // namespace detail
 
-	}; // namespace script
+#define REGISTER_SCRIPT(TYPE)									\
+		class TYPE;												\
+		namespace {												\
+		const u8 _reg##TYPE										\
+		{ hexad::script::detail::register_script(				\
+			hexad::script::detail::string_hash()(#TYPE),											\
+			&hexad::script::detail::create_script<TYPE>) };		\
+		}
 
+	}; // namespace script
 }

@@ -8,21 +8,41 @@ namespace hexad::script {
 		utl::vector<id::id_type>			id_mapping;
 		utl::vector<id::generation_type>	generations;
 		utl::deque<script_id>				free_ids;
+
+		using script_registry = std::unordered_map<size_t, detail::script_creator>;
+		script_registry& registry()
+		{
+			// in a static variable function to avoid initialization order issues
+			// makes sure that the data is initialized before accessing it
+			static script_registry reg;
+			return reg;
+		}
+
+		// Returns a boolean that expresses whether or not a script is a valid existing entity
+		// existance depends on matching generation indeces, non-null, and validity
+		bool exists(script_id id)
+		{
+			assert(id::is_valid(id)); // assert the id is valid
+			const id::id_type index{ id::index(id) }; // get the index of the script id
+			assert(index < generations.size() && id_mapping[index] < entity_scripts.size());
+			assert(generations[index] == id::generation(id)); // assert the generation ids match
+
+			return (generations[index] == id::generation(id)) &&
+				entity_scripts[id_mapping[index]] &&
+				entity_scripts[id_mapping[index]]->is_valid();
+		}
 	} // anon namespace
 
-	// Returns a boolean that expresses whether or not a script is a valid existing entity
-	// existance depends on matching generation indeces, non-null, and validity
-	bool exists(script_id id)
-	{
-		assert(id::is_valid(id)); // assert the id is valid
-		const id::id_type index{ id::index(id) }; // get the index of the script id
-		assert(index < generations.size() && id_mapping[index] < entity_scripts.size());
-		assert(generations[index] == id::generation(id)); // assert the generation ids match
-
-		return (generations[index] == id::generation(id)) &&
-			entity_scripts[id_mapping[index]] &&
-			entity_scripts[id_mapping[index]]->is_valid();
-	}
+	namespace detail {
+	
+		u8 register_script(size_t tag, script_creator func)
+		{
+			bool result{ registry().insert(script_registry::value_type{tag, func}).second };
+			assert(result);
+			return result;
+		}
+	
+	} // detail namespace
 
 	// CREATE A SCRIPT COMPONENT
 	component create(init_info info, game_entity::entity entity)
