@@ -195,10 +195,25 @@ namespace HexadEditor.GameProject
 
         private void CreateMSVCSolution(ProjectTemplate template, string path)
         {
-            Debug.Assert(File.Exists(Path.Combine(template.TemplatePath, "MSVCSolution")));
-            Debug.Assert(File.Exists(Path.Combine(template.TemplatePath, "MSVCProject")));
+            Debug.Assert(File.Exists(Path.Combine(template.TemplatePath, "MSVCSolution"))); // MSVCSolution and Project are files containing data normally contained
+            Debug.Assert(File.Exists(Path.Combine(template.TemplatePath, "MSVCProject"))); // by visual studio .sln and .vcxproj files with holes we need to fill in
 
             var engineAPIPath = Path.Combine(MainWindow.HexadPath, @"Engine\EngineAPI\");
+            Debug.Assert(Directory.Exists(engineAPIPath));
+
+            var _0 = ProjectName; // fills in project name
+            var _1 = "{" + Guid.NewGuid().ToString().ToUpper() + "}"; // fills in new solution's GUID
+
+            var solution = File.ReadAllText(Path.Combine(template.TemplatePath, "MSVCSolution"));
+            solution = string.Format(solution, _0, _1, "{" + Guid.NewGuid().ToString().ToUpper() + "}");
+            File.WriteAllText(Path.GetFullPath(Path.Combine(_projectPath, $@"{ProjectName}\{_0}.sln")), solution);
+
+            var _2 = engineAPIPath; // fills in engine path for IncludePath element
+            var _3 = MainWindow.HexadPath; // fills in platform and config name for LibraryPath element
+
+            var project = File.ReadAllText(Path.Combine(template.TemplatePath, "MSVCProject"));
+            project = string.Format(project, _0, _1, _2, _3);
+            File.WriteAllText(Path.GetFullPath(Path.Combine(_projectPath, $@"{ProjectName}\GameCode\{_0}.vcxproj")), project);
         }
 
         /// <summary>
