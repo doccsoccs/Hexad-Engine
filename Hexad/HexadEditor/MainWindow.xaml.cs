@@ -23,6 +23,8 @@ namespace HexadEditor
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static string HexadPath { get; private set; } = @"C:\Users\davin\Documents\GitHub Repos\Hexad\Hexad-Engine\Hexad";
+
         public MainWindow()
         {
             InitializeComponent();

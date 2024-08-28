@@ -67,9 +67,9 @@ namespace hexad::script {
 		}
 
 		assert(id::is_valid(id));
+		const id::id_type index{ (id::id_type)entity_scripts.size()};
 		entity_scripts.emplace_back(info.script_creator(entity));		// creates an instance and adds it to the back of the entity scripts array
 		assert(entity_scripts.back()->get_id() == entity.get_id());		// assert that the script class' id matches the entity its attatched to
-		const id::id_type index{ (id::id_type)entity_scripts.size() };
 		id_mapping[id::index(id)] = index;
 		return component{ id };
 	}

@@ -27,6 +27,7 @@ namespace HexadEditor.GameProject
         public string IconFilePath { get; set; }
         public string ScreenshotFilePath { get; set; }
         public string ProjectFilePath { get; set; }
+        public string TemplatePath { get; set; }
     }
 
     class CreateProject : ViewModelBase
@@ -178,6 +179,8 @@ namespace HexadEditor.GameProject
                 var projectPath = Path.GetFullPath(Path.Combine(path, $"{ProjectName}{Project.Extension}"));
                 File.WriteAllText(projectPath, projectXml);
 
+                CreateMSVCSolution(template, path);
+
                 return path;
             }
 
@@ -188,6 +191,14 @@ namespace HexadEditor.GameProject
 
                 return string.Empty;
             }
+        }
+
+        private void CreateMSVCSolution(ProjectTemplate template, string path)
+        {
+            Debug.Assert(File.Exists(Path.Combine(template.TemplatePath, "MSVCSolution")));
+            Debug.Assert(File.Exists(Path.Combine(template.TemplatePath, "MSVCProject")));
+
+            var engineAPIPath = Path.Combine(MainWindow.HexadPath, @"Engine\EngineAPI\");
         }
 
         /// <summary>
@@ -228,6 +239,7 @@ namespace HexadEditor.GameProject
                     template.ScreenshotFilePath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(file), "Screenshot.png"));
                     template.Screenshot = File.ReadAllBytes(template.ScreenshotFilePath);
                     template.ProjectFilePath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(file), template.ProjectFile));
+                    template.TemplatePath = Path.GetDirectoryName(file);
 
                     _projectTemplates.Add(template);
                 }

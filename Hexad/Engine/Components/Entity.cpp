@@ -35,19 +35,21 @@ namespace hexad::game_entity {
 			id = entity_id{ (id::id_type)generations.size() };
 			generations.push_back(0);
 
-			// Resize components array
+			// Resize components arrays
 			// don't call resize() so the number of memory allocations is lower
 			transforms.emplace_back();
+			scripts.emplace_back();
 		}
 
 		const entity new_entity{ id };
 		const id::id_type index{ id::index(id) };
 
-		// create transform component
+		// CREATE TRANSFORM COMPONENT !!!
 		assert(!transforms[index].is_valid());
 		transforms[index] = transform::create(*info.transform, new_entity);
 		if (!transforms[index].is_valid()) return {};
 
+		// CREATE SCRIPT COMPONENT !!!
 		// check if the entity has a script component
 		// if not, and there is a valid creator pointer, add one
 		if (info.script && info.script->script_creator)
@@ -64,6 +66,12 @@ namespace hexad::game_entity {
 	{
 		const id::id_type index{ id::index(id) };
 		assert(is_alive(id));
+
+		if (scripts[index].is_valid())
+		{
+			script::remove(scripts[index]);
+			scripts[index] = {}; // override removed script array data slot with an empty ID
+		}
 
 		// add a default component in the removed slot
 		transform::remove(transforms[index]);
