@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -14,7 +15,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace HexadEditor
 {
@@ -35,7 +35,31 @@ namespace HexadEditor
         private void OnMainWindowLoaded(object sender, RoutedEventArgs e)
         {
             Loaded -= OnMainWindowLoaded;
+            GetEnginePath();
             OpenProjectBrowserDialog();
+        }
+
+        private void GetEnginePath()
+        {
+            var hexadPath = Environment.GetEnvironmentVariable("HEXAD_ENGINE", EnvironmentVariableTarget.User);
+
+            if (hexadPath == null || !Directory.Exists(Path.Combine(hexadPath, @"Engine\EngineAPI")))
+            {
+                var dlg = new EnginePathDialog();
+                if (dlg.ShowDialog() == true)
+                {
+                    HexadPath = dlg.HexadPath;
+                    Environment.SetEnvironmentVariable("HEXAD_ENGINE", HexadPath.ToUpper(), EnvironmentVariableTarget.User);
+                }
+                else
+                {
+                    Application.Current.Shutdown();
+                }
+            }
+            else
+            {
+                HexadPath = hexadPath;
+            }
         }
 
         private void OnMainWindowClosing(object sender, CancelEventArgs e)

@@ -188,7 +188,7 @@
                                 <Button x:Name="btnMinimize" Click="OnMinimize_Button_Click" Margin="0">
                                     <Button.Content>
                                         <Rectangle Stroke="{DynamicResource Editor.FontBrush}" StrokeThickness="1"
-                                                   Width="10" Height="1" Margin="0,4,0,0"/>
+                                                   Width="10" Height="8"/>
                                     </Button.Content>
                                 </Button>
                             </DockPanel>
